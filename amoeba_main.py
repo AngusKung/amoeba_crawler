@@ -42,7 +42,7 @@ class AmoebaMain(object):
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-new', help='Start a whole new crawling session', action="store_true")
+    parser.add_argument('-new', help='Start a whole new crawling session', action="store")
     #parser.add_argument('-load', help='Load former urls in pickle form and continue crawling', dest="load_file", action="store")
     
     if len(sys.argv[1:])==0:
@@ -50,8 +50,10 @@ if __name__=="__main__":
         parser.exit()
     args = parser.parse_args()
 
-    if args.new:
+    if len(args.new)>0:
         obj_amoeba = AmoebaMain()
         obj_amoeba.crawl_search()
         obj_amoeba.crawl_cont()
+    
+    self.outputer.writeTXT(args.new)
         

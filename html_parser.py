@@ -34,7 +34,7 @@ class HtmlParser(object):
     def _get_item_comments(self,soup):
         cmts = []
         cmt_page = 1
-        print "reading cmt page No.",cmt_page
+        print "reading cmt page",cmt_page
         all_cards = soup.find('div',class_='cards').findAll('div',class_='card')
         cmts += self._get_cards_comments(all_cards)
         next_cmt_page = soup.find('div',class_='pagination')
@@ -42,7 +42,7 @@ class HtmlParser(object):
             next_find = next_cmt_page.find('a',class_='next_page')
             if next_find:
                 cmt_page += 1
-                print "reading cmt page No.",cmt_page
+                print "reading cmt page",cmt_page
                 next_url = self.root_url + next_find['href']
                 next_cont = self.download(next_url)
                 next_soup = BeautifulSoup(next_cont,'html.parser', from_encoding='utf-8')
@@ -52,8 +52,7 @@ class HtmlParser(object):
             else:
                 next_cmt_page = None
         #while soup.fin
-        print len(cmts)
-        pdb.set_trace()
+        print "Comments found:",len(cmts)
         return cmts
 
 
@@ -81,6 +80,7 @@ class HtmlParser(object):
         data['like_heart'] = info.find('div',class_='deg').findAll('div',class_='text')[1].text
         
         print "Crawling",info.find('div',class_='info-tbl').find('div',class_='row').find('div',class_='val').text
+        print "(",item_url,")"
         info_rows = info.find('div',class_='info-tbl').findAll('div',class_='row')
         for row in info_rows:
             val = row.find('div',class_='val')

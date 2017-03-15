@@ -21,7 +21,6 @@ class UrlManager(object):
         for url in urls:
             if url not in self.item_urls:
                 self.item_urls.add(url)
-                print url
     
     def has_new_url(self):
         return len(self.item_urls) != 0
