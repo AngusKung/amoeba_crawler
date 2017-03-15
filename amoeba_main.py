@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 import argparse
 import sys
 
@@ -8,7 +8,7 @@ class AmoebaMain(object):
 
     def __init__(self,load_file=""):
         self.root_url = "https://www.urcosme.com"
-        self.init_url = "https://www.urcosme.com/search/product?keyword=%E5%AE%89%E8%80%90%E6%9B%AC"
+        self.init_url = "https://www.urcosme.com/search/product?keyword=%E8%B3%87%E7%94%9F%E5%A0%82"
         self.load_file = load_file
         self.new = True if len(load_file)==0 else False
         self.urls = url_manager.UrlManager(load_file)
@@ -31,11 +31,13 @@ class AmoebaMain(object):
     def crawl_cont(self):
         count = 1
         while self.urls.has_new_url():
-            print "crawling...No.",count
+            print "\nCrawling...item No.",count,
             new_url = self.urls.get_new_url()
             html_cont = self.parser.download(new_url)
             new_data = self.parser.parse(new_url,html_cont)
             count += 1
+            self.outputer.collect_data(new_data)
+        
             
 
 if __name__=="__main__":
