@@ -30,14 +30,15 @@ class AmoebaMain(object):
 
     def crawl_cont(self):
         count = 1
-        #while self.urls.has_new_url():
-	while count < 3:
+        while self.urls.has_new_url():
             print "\nCrawling...item No.",count,
+            self.urls.get_new_url()
             new_url = self.urls.get_new_url()
             html_cont = self.parser.download(new_url)
             new_data = self.parser.parse(new_url,html_cont)
+            self.outputer.writeTXT(args.new,new_data,count)
+            self.outputer.writePKL(args.new,new_data,count)
             count += 1
-            self.outputer.writeTXT(args.new,new_data)
         
             
 

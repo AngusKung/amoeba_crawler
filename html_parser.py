@@ -16,8 +16,7 @@ class HtmlParser(object):
             return
 
         soup = BeautifulSoup(html_cont,'html.parser', from_encoding='utf-8')
-        #nextpage_url = self._get_page_url(page_url, soup)
-        nextpage_url = None
+        nextpage_url = self._get_page_url(page_url, soup)
         page_item_urls = self._get_item_url(page_url, soup)
         return nextpage_url,page_item_urls
 
