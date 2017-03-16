@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 import pdb
 import re
 import urlparse
@@ -16,10 +16,10 @@ class HtmlParser(object):
             return
 
         soup = BeautifulSoup(html_cont,'html.parser', from_encoding='utf-8')
-        nextpage_url = self._get_page_url(page_url, soup)
+        #nextpage_url = self._get_page_url(page_url, soup)
+        nextpage_url = None
         page_item_urls = self._get_item_url(page_url, soup)
         return nextpage_url,page_item_urls
-
 
     def parse(self,item_url,html_cont):
         if html_cont is None:
@@ -70,22 +70,22 @@ class HtmlParser(object):
     def _get_cmt(self,cmt_url):
         cmt_cont = self.download(cmt_url)
         soup = BeautifulSoup(cmt_cont,'html.parser', from_encoding='utf-8')
-        return soup.find('div',class_='title-word').text,soup.find('div',class_='review-content').text
+        return soup.find('div',class_='title-word').text.encode('utf-8'),soup.find('div',class_='review-content').text.encode('utf-8')
         
 
     def _get_item_data(self,item_url,soup):
         data = {}
         data['url'] = item_url
         info = soup.find('div',class_='board-content')
-        data['like_heart'] = info.find('div',class_='deg').findAll('div',class_='text')[1].text
+        data['like_heart'] = info.find('div',class_='deg').findAll('div',class_='text')[1].text.encode('utf-8')
         
-        print "Crawling",info.find('div',class_='info-tbl').find('div',class_='row').find('div',class_='val').text
+        print "Crawling",info.find('div',class_='info-tbl').find('div',class_='row').find('div',class_='val').text.encode('utf-8')
         print "(",item_url,")"
         info_rows = info.find('div',class_='info-tbl').findAll('div',class_='row')
         for row in info_rows:
             val = row.find('div',class_='val')
             if val:
-                data[row.find('div',class_='name').text] = val.text
+                data[row.find('div',class_='name').text.encode('utf-8')] = val.text.encode('utf-8')
         return data
 
 

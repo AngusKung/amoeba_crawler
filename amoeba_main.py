@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 import argparse
 import sys
 
@@ -30,13 +30,14 @@ class AmoebaMain(object):
 
     def crawl_cont(self):
         count = 1
-        while self.urls.has_new_url():
+        #while self.urls.has_new_url():
+	while count < 3:
             print "\nCrawling...item No.",count,
             new_url = self.urls.get_new_url()
             html_cont = self.parser.download(new_url)
             new_data = self.parser.parse(new_url,html_cont)
             count += 1
-            self.outputer.collect_data(new_data)
+            self.outputer.writeTXT(args.new,new_data)
         
             
 
@@ -55,5 +56,4 @@ if __name__=="__main__":
         obj_amoeba.crawl_search()
         obj_amoeba.crawl_cont()
     
-    self.outputer.writeTXT(args.new)
         
